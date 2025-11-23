@@ -580,6 +580,8 @@ MonoBehaviour:
   _horizontalVelocity: 3
   _jumpVelocity: 6
   _jumpDuration: 0.5
+  _jumpSprite: {fileID: 3810435283219779972, guid: c471622ee243a65439ce6f7d292a3a43, type: 3}
+  _defaultSprite: {fileID: 402502597922571196, guid: 508bd49d4dd0536468e67586aec919f2, type: 3}
   IsGrounded: 0
 --- !u!1 &1206895914
 GameObject:
