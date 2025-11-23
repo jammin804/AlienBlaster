@@ -4,6 +4,7 @@ using UnityEngine;
 public class Player : MonoBehaviour
 {
     private float _jumpEndTime;
+    [SerializeField] private float _horizontalVelocity = 3.0f;
     [SerializeField] private float _jumpVelocity = 5.0f;
     [SerializeField] private float _jumpDuration = 0.5f;
     public bool IsGrounded;
@@ -37,14 +38,15 @@ public class Player : MonoBehaviour
         var rb = GetComponent<Rigidbody2D>();
         var vertical = rb.linearVelocity.y;
         
-        if (Input.GetButtonDown("Fire1"))
+        if (Input.GetButtonDown("Fire1") && IsGrounded)
             _jumpEndTime = Time.time + _jumpDuration;
         
-        if (Input.GetButton("Fire1") && _jumpEndTime > Time.time && IsGrounded)
+        if (Input.GetButton("Fire1") && _jumpEndTime > Time.time)
         {
             vertical = _jumpVelocity;
         }
 
+        horizontal *= _horizontalVelocity;
         rb.linearVelocity = new Vector2(horizontal, vertical);
     }
 }
