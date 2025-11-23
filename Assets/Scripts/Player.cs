@@ -1,4 +1,3 @@
-using System;
 using UnityEngine;
 
 public class Player : MonoBehaviour
@@ -11,53 +10,58 @@ public class Player : MonoBehaviour
     private Sprite _defaultSprite;
     public bool IsGrounded;
     private SpriteRenderer _spriteRenderer;
+    private float _horizontal;
 
 
     private void Awake()
     {
         _spriteRenderer = GetComponent<SpriteRenderer>();
         _defaultSprite = _spriteRenderer.sprite;
-        
     }
 
-    void OnDrawGizmos()
+    private void OnDrawGizmos()
     {
-        SpriteRenderer spriteRenderer = GetComponent<SpriteRenderer>();
-        Vector2 origin = new Vector2(transform.position.x, transform.position.y - spriteRenderer.sprite.bounds.extents.y);
+        var spriteRenderer = GetComponent<SpriteRenderer>();
+        var origin = new Vector2(transform.position.x, transform.position.y - spriteRenderer.sprite.bounds.extents.y);
         Gizmos.color = Color.red;
         Gizmos.DrawLine(origin, origin + Vector2.down * 0.1f);
     }
 
     // Update is called once per frame
-    void Update()
+    private void Update()
     {
-        Vector2 origin = new Vector2(transform.position.x, transform.position.y - _spriteRenderer.sprite.bounds.extents.y);
+        var origin = new Vector2(transform.position.x, transform.position.y - _spriteRenderer.sprite.bounds.extents.y);
         var hit = Physics2D.Raycast(origin, Vector2.down, 0.1f);
         if (hit.collider != null)
-        {
             IsGrounded = true;
-            _spriteRenderer.sprite = _defaultSprite;
-        }
         else
-        {
             IsGrounded = false;
-            _spriteRenderer.sprite = _jumpSprite;
-        }
 
-        var horizontal = Input.GetAxis("Horizontal");
-        Debug.Log(horizontal);
+        _horizontal = Input.GetAxis("Horizontal");
+        Debug.Log(_horizontal);
         var rb = GetComponent<Rigidbody2D>();
         var vertical = rb.linearVelocity.y;
-        
+
         if (Input.GetButtonDown("Fire1") && IsGrounded)
             _jumpEndTime = Time.time + _jumpDuration;
-        
-        if (Input.GetButton("Fire1") && _jumpEndTime > Time.time)
-        {
-            vertical = _jumpVelocity;
-        }
 
-        horizontal *= _horizontalVelocity;
-        rb.linearVelocity = new Vector2(horizontal, vertical);
+        if (Input.GetButton("Fire1") && _jumpEndTime > Time.time) vertical = _jumpVelocity;
+
+        _horizontal *= _horizontalVelocity;
+        rb.linearVelocity = new Vector2(_horizontal, vertical);
+        UpdateSprite();
+    }
+
+    private void UpdateSprite()
+    {
+        if (IsGrounded)
+            _spriteRenderer.sprite = _defaultSprite;
+        else
+            _spriteRenderer.sprite = _jumpSprite;
+
+        if (_horizontal > 0)
+            _spriteRenderer.flipX = false;
+        else if (_horizontal < 0)
+            _spriteRenderer.flipX = true;
     }
 }
