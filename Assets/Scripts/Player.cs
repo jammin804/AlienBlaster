@@ -1,7 +1,9 @@
+using System;
 using UnityEngine;
 
 public class Player : MonoBehaviour
 {
+    private static readonly int Grounded = Animator.StringToHash("IsGrounded");
     private float _jumpEndTime;
     [SerializeField] private float _horizontalVelocity = 3.0f;
     [SerializeField] private float _jumpVelocity = 5.0f;
@@ -54,10 +56,8 @@ public class Player : MonoBehaviour
 
     private void UpdateSprite()
     {
-        if (IsGrounded)
-            _spriteRenderer.sprite = _defaultSprite;
-        else
-            _spriteRenderer.sprite = _jumpSprite;
+        GetComponent<Animator>().SetBool(Grounded, IsGrounded);
+        GetComponent<Animator>().SetFloat("HorizontalSpeed", Math.Abs(_horizontal));
 
         if (_horizontal > 0)
             _spriteRenderer.flipX = false;
