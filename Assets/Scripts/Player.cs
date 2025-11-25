@@ -10,8 +10,7 @@ public class Player : MonoBehaviour
     [SerializeField] private float _jumpDuration = 0.5f;
     [SerializeField] private Sprite _jumpSprite;
     [SerializeField] private LayerMask _layerMask;
-    [SerializeField] private float _footOffset;
-    private Sprite _defaultSprite;
+    [SerializeField] private float _footOffset = 0.35f;
     public bool IsGrounded;
     private SpriteRenderer _spriteRenderer;
     private Animator _animator;
@@ -23,7 +22,6 @@ public class Player : MonoBehaviour
     {
         _spriteRenderer = GetComponent<SpriteRenderer>();
         _animator = GetComponent<Animator>();
-        _defaultSprite = _spriteRenderer.sprite;
     }
 
     private void OnDrawGizmos()
@@ -34,7 +32,12 @@ public class Player : MonoBehaviour
         Vector2 origin = new Vector2(transform.position.x, transform.position.y - spriteRenderer.sprite.bounds.extents.y);
         Gizmos.DrawLine(origin, origin + Vector2.down * 0.1f);
         
+        //Draw Left Foot
         origin = new Vector2(transform.position.x - _footOffset, transform.position.y - spriteRenderer.sprite.bounds.extents.y);
+        Gizmos.DrawLine(origin, origin + Vector2.down * 0.1f);
+        
+        //Draw Right Foot
+        origin = new Vector2(transform.position.x + _footOffset, transform.position.y - spriteRenderer.sprite.bounds.extents.y);
         Gizmos.DrawLine(origin, origin + Vector2.down * 0.1f);
     }
 
