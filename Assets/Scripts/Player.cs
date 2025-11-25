@@ -15,7 +15,7 @@ public class Player : MonoBehaviour
     private SpriteRenderer _spriteRenderer;
     private Animator _animator;
     private float _horizontal;
-
+    private int _jumpsRemaining;
 
 
     private void Awake()
@@ -51,8 +51,11 @@ public class Player : MonoBehaviour
         var rb = GetComponent<Rigidbody2D>();
         var vertical = rb.linearVelocity.y;
 
-        if (Input.GetButtonDown("Fire1") && IsGrounded)
+        if (Input.GetButtonDown("Fire1") && _jumpsRemaining > 0)
+        {
             _jumpEndTime = Time.time + _jumpDuration;
+            _jumpsRemaining--;
+        }
 
         if (Input.GetButton("Fire1") && _jumpEndTime > Time.time) vertical = _jumpVelocity;
 
@@ -82,6 +85,11 @@ public class Player : MonoBehaviour
         hit = Physics2D.Raycast(origin, Vector2.down, 0.1f, _layerMask);
         if (hit.collider != null)
             IsGrounded = true;
+
+        if (IsGrounded && GetComponent<Rigidbody2D>().linearVelocity.y <= 0)
+        {
+            _jumpsRemaining = 2;
+        }
     }
 
     private void UpdateSprite()
