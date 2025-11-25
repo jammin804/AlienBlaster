@@ -9,11 +9,14 @@ public class Player : MonoBehaviour
     [SerializeField] private float _jumpVelocity = 5.0f;
     [SerializeField] private float _jumpDuration = 0.5f;
     [SerializeField] private Sprite _jumpSprite;
+    [SerializeField] private LayerMask _layerMask;
+    [SerializeField] private float _footOffset;
     private Sprite _defaultSprite;
     public bool IsGrounded;
     private SpriteRenderer _spriteRenderer;
     private Animator _animator;
     private float _horizontal;
+
 
 
     private void Awake()
@@ -25,10 +28,13 @@ public class Player : MonoBehaviour
 
     private void OnDrawGizmos()
     {
-        var spriteRenderer = GetComponent<SpriteRenderer>();
-
-        var origin = new Vector2(transform.position.x, transform.position.y - spriteRenderer.sprite.bounds.extents.y);
+        SpriteRenderer spriteRenderer = GetComponent<SpriteRenderer>();
         Gizmos.color = Color.red;
+        
+        Vector2 origin = new Vector2(transform.position.x, transform.position.y - spriteRenderer.sprite.bounds.extents.y);
+        Gizmos.DrawLine(origin, origin + Vector2.down * 0.1f);
+        
+        origin = new Vector2(transform.position.x - _footOffset, transform.position.y - spriteRenderer.sprite.bounds.extents.y);
         Gizmos.DrawLine(origin, origin + Vector2.down * 0.1f);
     }
 
@@ -36,7 +42,7 @@ public class Player : MonoBehaviour
     private void Update()
     {
         var origin = new Vector2(transform.position.x, transform.position.y - _spriteRenderer.sprite.bounds.extents.y);
-        var hit = Physics2D.Raycast(origin, Vector2.down, 0.1f);
+        var hit = Physics2D.Raycast(origin, Vector2.down, 0.1f, _layerMask);
         if (hit.collider != null)
             IsGrounded = true;
         else
