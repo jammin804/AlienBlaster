@@ -11,9 +11,9 @@ public class Player : MonoBehaviour
     [SerializeField] private Sprite _jumpSprite;
     [SerializeField] private LayerMask _layerMask;
     [SerializeField] private float _footOffset = 0.35f;
-    
+
     public bool IsGrounded;
-    
+
     private SpriteRenderer _spriteRenderer;
     private Animator _animator;
     private AudioSource _audioSource;
@@ -30,18 +30,20 @@ public class Player : MonoBehaviour
 
     private void OnDrawGizmos()
     {
-        SpriteRenderer spriteRenderer = GetComponent<SpriteRenderer>();
+        var spriteRenderer = GetComponent<SpriteRenderer>();
         Gizmos.color = Color.red;
-        
-        Vector2 origin = new Vector2(transform.position.x, transform.position.y - spriteRenderer.sprite.bounds.extents.y);
+
+        var origin = new Vector2(transform.position.x, transform.position.y - spriteRenderer.sprite.bounds.extents.y);
         Gizmos.DrawLine(origin, origin + Vector2.down * 0.1f);
-        
+
         //Draw Left Foot
-        origin = new Vector2(transform.position.x - _footOffset, transform.position.y - spriteRenderer.sprite.bounds.extents.y);
+        origin = new Vector2(transform.position.x - _footOffset,
+            transform.position.y - spriteRenderer.sprite.bounds.extents.y);
         Gizmos.DrawLine(origin, origin + Vector2.down * 0.1f);
-        
+
         //Draw Right Foot
-        origin = new Vector2(transform.position.x + _footOffset, transform.position.y - spriteRenderer.sprite.bounds.extents.y);
+        origin = new Vector2(transform.position.x + _footOffset,
+            transform.position.y - spriteRenderer.sprite.bounds.extents.y);
         Gizmos.DrawLine(origin, origin + Vector2.down * 0.1f);
     }
 
@@ -59,6 +61,9 @@ public class Player : MonoBehaviour
         {
             _jumpEndTime = Time.time + _jumpDuration;
             _jumpsRemaining--;
+
+            _audioSource.pitch = (_jumpsRemaining > 0) ? 1f : 1.2f;
+
             _audioSource.Play();
         }
 
@@ -72,29 +77,28 @@ public class Player : MonoBehaviour
     private void UpdateGrounding()
     {
         IsGrounded = false;
-        
+
         //Check center
-        Vector2 origin = new Vector2(transform.position.x, transform.position.y - _spriteRenderer.sprite.bounds.extents.y);
-        RaycastHit2D hit = Physics2D.Raycast(origin, Vector2.down, 0.1f, _layerMask);
+        var origin = new Vector2(transform.position.x, transform.position.y - _spriteRenderer.sprite.bounds.extents.y);
+        var hit = Physics2D.Raycast(origin, Vector2.down, 0.1f, _layerMask);
         if (hit.collider != null)
             IsGrounded = true;
-        
+
         //Check left
-        origin = new Vector2(transform.position.x - _footOffset, transform.position.y - _spriteRenderer.sprite.bounds.extents.y);
-        hit = Physics2D.Raycast(origin, Vector2.down, 0.1f, _layerMask);
-        if (hit.collider != null)
-            IsGrounded = true;
-        
-        //Check right
-        origin = new Vector2(transform.position.x + _footOffset, transform.position.y - _spriteRenderer.sprite.bounds.extents.y);
+        origin = new Vector2(transform.position.x - _footOffset,
+            transform.position.y - _spriteRenderer.sprite.bounds.extents.y);
         hit = Physics2D.Raycast(origin, Vector2.down, 0.1f, _layerMask);
         if (hit.collider != null)
             IsGrounded = true;
 
-        if (IsGrounded && GetComponent<Rigidbody2D>().linearVelocity.y <= 0)
-        {
-            _jumpsRemaining = 2;
-        }
+        //Check right
+        origin = new Vector2(transform.position.x + _footOffset,
+            transform.position.y - _spriteRenderer.sprite.bounds.extents.y);
+        hit = Physics2D.Raycast(origin, Vector2.down, 0.1f, _layerMask);
+        if (hit.collider != null)
+            IsGrounded = true;
+
+        if (IsGrounded && GetComponent<Rigidbody2D>().linearVelocity.y <= 0) _jumpsRemaining = 2;
     }
 
     private void UpdateSprite()
