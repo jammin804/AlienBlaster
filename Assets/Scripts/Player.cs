@@ -11,9 +11,12 @@ public class Player : MonoBehaviour
     [SerializeField] private Sprite _jumpSprite;
     [SerializeField] private LayerMask _layerMask;
     [SerializeField] private float _footOffset = 0.35f;
+    
     public bool IsGrounded;
+    
     private SpriteRenderer _spriteRenderer;
     private Animator _animator;
+    private AudioSource _audioSource;
     private float _horizontal;
     private int _jumpsRemaining;
 
@@ -22,6 +25,7 @@ public class Player : MonoBehaviour
     {
         _spriteRenderer = GetComponent<SpriteRenderer>();
         _animator = GetComponent<Animator>();
+        _audioSource = GetComponent<AudioSource>();
     }
 
     private void OnDrawGizmos()
@@ -55,6 +59,7 @@ public class Player : MonoBehaviour
         {
             _jumpEndTime = Time.time + _jumpDuration;
             _jumpsRemaining--;
+            _audioSource.Play();
         }
 
         if (Input.GetButton("Fire1") && _jumpEndTime > Time.time) vertical = _jumpVelocity;
