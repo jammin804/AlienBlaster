@@ -12,18 +12,21 @@ public class Player : MonoBehaviour
     private Sprite _defaultSprite;
     public bool IsGrounded;
     private SpriteRenderer _spriteRenderer;
+    private Animator _animator;
     private float _horizontal;
 
 
     private void Awake()
     {
         _spriteRenderer = GetComponent<SpriteRenderer>();
+        _animator = GetComponent<Animator>();
         _defaultSprite = _spriteRenderer.sprite;
     }
 
     private void OnDrawGizmos()
     {
         var spriteRenderer = GetComponent<SpriteRenderer>();
+
         var origin = new Vector2(transform.position.x, transform.position.y - spriteRenderer.sprite.bounds.extents.y);
         Gizmos.color = Color.red;
         Gizmos.DrawLine(origin, origin + Vector2.down * 0.1f);
@@ -56,8 +59,8 @@ public class Player : MonoBehaviour
 
     private void UpdateSprite()
     {
-        GetComponent<Animator>().SetBool(Grounded, IsGrounded);
-        GetComponent<Animator>().SetFloat("HorizontalSpeed", Math.Abs(_horizontal));
+        _animator.SetBool(Grounded, IsGrounded);
+        _animator.SetFloat("HorizontalSpeed", Math.Abs(_horizontal));
 
         if (_horizontal > 0)
             _spriteRenderer.flipX = false;
