@@ -44,12 +44,7 @@ public class Player : MonoBehaviour
     // Update is called once per frame
     private void Update()
     {
-        var origin = new Vector2(transform.position.x, transform.position.y - _spriteRenderer.sprite.bounds.extents.y);
-        var hit = Physics2D.Raycast(origin, Vector2.down, 0.1f, _layerMask);
-        if (hit.collider != null)
-            IsGrounded = true;
-        else
-            IsGrounded = false;
+        UpdateGrounding();
 
         _horizontal = Input.GetAxis("Horizontal");
         Debug.Log(_horizontal);
@@ -64,6 +59,29 @@ public class Player : MonoBehaviour
         _horizontal *= _horizontalVelocity;
         rb.linearVelocity = new Vector2(_horizontal, vertical);
         UpdateSprite();
+    }
+
+    private void UpdateGrounding()
+    {
+        IsGrounded = false;
+        
+        //Check center
+        Vector2 origin = new Vector2(transform.position.x, transform.position.y - _spriteRenderer.sprite.bounds.extents.y);
+        RaycastHit2D hit = Physics2D.Raycast(origin, Vector2.down, 0.1f, _layerMask);
+        if (hit.collider != null)
+            IsGrounded = true;
+        
+        //Check left
+        origin = new Vector2(transform.position.x - _footOffset, transform.position.y - _spriteRenderer.sprite.bounds.extents.y);
+        hit = Physics2D.Raycast(origin, Vector2.down, 0.1f, _layerMask);
+        if (hit.collider != null)
+            IsGrounded = true;
+        
+        //Check right
+        origin = new Vector2(transform.position.x + _footOffset, transform.position.y - _spriteRenderer.sprite.bounds.extents.y);
+        hit = Physics2D.Raycast(origin, Vector2.down, 0.1f, _layerMask);
+        if (hit.collider != null)
+            IsGrounded = true;
     }
 
     private void UpdateSprite()

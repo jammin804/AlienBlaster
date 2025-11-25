@@ -478,7 +478,7 @@ MonoBehaviour:
   _layerMask:
     serializedVersion: 2
     m_Bits: 55
-  _footOffset: 0.3
+  _footOffset: 0.35
   IsGrounded: 0
 --- !u!95 &702366064
 Animator:
