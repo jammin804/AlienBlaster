@@ -490,8 +490,9 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 08c7e7720c576ba4c8062cbb71b01102, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  _jumps: 2
   _jumpDelay: 3
-  _jumpForce: {x: 200, y: 300}
+  _jumpForce: {x: 150, y: 300}
   _jumpSprite: {fileID: 7767502141250053, guid: 22dbdec89cbc8ef488c456cddc701598, type: 3}
 --- !u!114 &197077466
 MonoBehaviour:
