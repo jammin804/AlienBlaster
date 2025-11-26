@@ -4,7 +4,6 @@ using UnityEngine;
 public class Player : MonoBehaviour
 {
     private static readonly int Grounded = Animator.StringToHash("IsGrounded");
-    private float _jumpEndTime;
     [SerializeField] private float _horizontalVelocity = 3.0f;
     [SerializeField] private float _jumpVelocity = 5.0f;
     [SerializeField] private float _jumpDuration = 0.5f;
@@ -17,8 +16,11 @@ public class Player : MonoBehaviour
     private SpriteRenderer _spriteRenderer;
     private Animator _animator;
     private AudioSource _audioSource;
+    
     private float _horizontal;
     private int _jumpsRemaining;
+    private float _jumpEndTime;
+    private Rigidbody2D _rb;
 
 
     private void Awake()
@@ -26,14 +28,15 @@ public class Player : MonoBehaviour
         _spriteRenderer = GetComponent<SpriteRenderer>();
         _animator = GetComponent<Animator>();
         _audioSource = GetComponent<AudioSource>();
+        _rb = GetComponent<Rigidbody2D>();
     }
 
     private void OnDrawGizmos()
     {
-        var spriteRenderer = GetComponent<SpriteRenderer>();
+        SpriteRenderer spriteRenderer = GetComponent<SpriteRenderer>();
         Gizmos.color = Color.red;
 
-        var origin = new Vector2(transform.position.x, transform.position.y - spriteRenderer.sprite.bounds.extents.y);
+        Vector2 origin = new Vector2(transform.position.x, transform.position.y - spriteRenderer.sprite.bounds.extents.y);
         Gizmos.DrawLine(origin, origin + Vector2.down * 0.1f);
 
         //Draw Left Foot
@@ -54,8 +57,7 @@ public class Player : MonoBehaviour
 
         _horizontal = Input.GetAxis("Horizontal");
         Debug.Log(_horizontal);
-        var rb = GetComponent<Rigidbody2D>();
-        var vertical = rb.linearVelocity.y;
+        var vertical = _rb.linearVelocity.y;
 
         if (Input.GetButtonDown("Fire1") && _jumpsRemaining > 0)
         {
@@ -63,14 +65,13 @@ public class Player : MonoBehaviour
             _jumpsRemaining--;
 
             _audioSource.pitch = (_jumpsRemaining > 0) ? 1f : 1.2f;
-
             _audioSource.Play();
         }
 
         if (Input.GetButton("Fire1") && _jumpEndTime > Time.time) vertical = _jumpVelocity;
 
         _horizontal *= _horizontalVelocity;
-        rb.linearVelocity = new Vector2(_horizontal, vertical);
+        _rb.linearVelocity = new Vector2(_horizontal, vertical);
         UpdateSprite();
     }
 
@@ -79,8 +80,8 @@ public class Player : MonoBehaviour
         IsGrounded = false;
 
         //Check center
-        var origin = new Vector2(transform.position.x, transform.position.y - _spriteRenderer.sprite.bounds.extents.y);
-        var hit = Physics2D.Raycast(origin, Vector2.down, 0.1f, _layerMask);
+        Vector2 origin = new Vector2(transform.position.x, transform.position.y - _spriteRenderer.sprite.bounds.extents.y);
+        RaycastHit2D hit = Physics2D.Raycast(origin, Vector2.down, 0.1f, _layerMask);
         if (hit.collider != null)
             IsGrounded = true;
 
