@@ -7,11 +7,13 @@ public class Spring : MonoBehaviour
     [SerializeField]private Sprite _sprung;
     private Sprite _defaultSprite;
     private SpriteRenderer _spriteRenderer;
+    private AudioSource _audioSource;
 
     private void Awake()
     {
         _spriteRenderer = GetComponent<SpriteRenderer>();
         _defaultSprite = _spriteRenderer.sprite;
+        _audioSource = GetComponent<AudioSource>();
         
     }
 
@@ -20,6 +22,8 @@ public class Spring : MonoBehaviour
         if (collision.collider.CompareTag("Player"))
         {
             _spriteRenderer.sprite = _sprung;
+            _audioSource.pitch = 0.25f;
+            _audioSource.Play();
         }
     }
 
