@@ -845,8 +845,10 @@ MonoBehaviour:
     serializedVersion: 2
     m_Bits: 55
   _footOffset: 0.35
-  _acceleration: 1
+  _groundAcceleration: 10
+  _snowAcceleration: 1
   IsGrounded: 0
+  IsOnSnow: 0
 --- !u!95 &702366064
 Animator:
   serializedVersion: 7
@@ -1637,8 +1639,8 @@ GameObject:
   - component: {fileID: 1669918079}
   - component: {fileID: 1669918078}
   m_Layer: 0
-  m_Name: grassMid_0 (6)
-  m_TagString: Ground
+  m_Name: Snow Ground
+  m_TagString: Snow
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -1771,8 +1773,8 @@ GameObject:
   - component: {fileID: 2087734881}
   - component: {fileID: 2087734883}
   m_Layer: 0
-  m_Name: grassMid_0
-  m_TagString: Ground
+  m_Name: Snow Ground
+  m_TagString: Snow
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
