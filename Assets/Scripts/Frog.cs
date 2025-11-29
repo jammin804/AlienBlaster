@@ -13,11 +13,13 @@ public class Frog : MonoBehaviour
     [SerializeField] private float _jumpDelay = 3;
     [SerializeField] private Vector2 _jumpForce;
     [SerializeField] private Sprite _jumpSprite;
+    private AudioSource _audioSource;
 
     private void Awake()
     {
         _rb = GetComponent<Rigidbody2D>();
         _spriteRender = GetComponent<SpriteRenderer>();
+        _audioSource = GetComponent<AudioSource>();
         _defaultSprite = _spriteRender.sprite;
         _jumpsRemaining = _jumps;
         InvokeRepeating("Jump", _jumpDelay, _jumpDelay);
@@ -44,6 +46,7 @@ public class Frog : MonoBehaviour
         if (collision.gameObject.CompareTag("Ground"))
         {
             _spriteRender.sprite = _defaultSprite;
+            _audioSource.Play();
         }
     }
 }
