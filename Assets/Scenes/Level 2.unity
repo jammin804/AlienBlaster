@@ -837,7 +837,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: b839798af73ca0b409014f9ad7d6d5d2, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  _horizontalVelocity: 3
+  _maxHorizontalSpeed: 5
   _jumpVelocity: 5
   _jumpDuration: 0.5
   _jumpSprite: {fileID: 3810435283219779972, guid: c471622ee243a65439ce6f7d292a3a43, type: 3}
@@ -845,6 +845,7 @@ MonoBehaviour:
     serializedVersion: 2
     m_Bits: 55
   _footOffset: 0.35
+  _acceleration: 1
   IsGrounded: 0
 --- !u!95 &702366064
 Animator:
@@ -1254,10 +1255,6 @@ PrefabInstance:
     serializedVersion: 3
     m_TransformParent: {fileID: 237376224}
     m_Modifications:
-    - target: {fileID: 3215810365787773789, guid: bfe0b0cc8df9c7e4fa7c170c50d5548e, type: 3}
-      propertyPath: m_Name
-      value: Snow Water
-      objectReference: {fileID: 0}
     - target: {fileID: 629035205662713144, guid: bfe0b0cc8df9c7e4fa7c170c50d5548e, type: 3}
       propertyPath: m_LocalPosition.x
       value: 42
@@ -1297,6 +1294,10 @@ PrefabInstance:
     - target: {fileID: 629035205662713144, guid: bfe0b0cc8df9c7e4fa7c170c50d5548e, type: 3}
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 3215810365787773789, guid: bfe0b0cc8df9c7e4fa7c170c50d5548e, type: 3}
+      propertyPath: m_Name
+      value: Snow Water
       objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []

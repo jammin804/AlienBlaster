@@ -1,16 +1,19 @@
 using System;
+using Unity.VisualScripting;
 using UnityEngine;
+using UnityEngine.Serialization;
 
 public class Player : MonoBehaviour
 {
     private static readonly int Grounded = Animator.StringToHash("IsGrounded");
-    [SerializeField] private float _horizontalVelocity = 3.0f;
+    [FormerlySerializedAs("_horizontalVelocity")] [SerializeField] private float _maxHorizontalSpeed = 5.0f;
     [SerializeField] private float _jumpVelocity = 5.0f;
     [SerializeField] private float _jumpDuration = 0.5f;
     [SerializeField] private Sprite _jumpSprite;
     [SerializeField] private LayerMask _layerMask;
     [SerializeField] private float _footOffset = 0.35f;
-
+    [SerializeField] private float _acceleration = 10.0f;
+    
     public bool IsGrounded;
 
     private SpriteRenderer _spriteRenderer;
@@ -21,6 +24,7 @@ public class Player : MonoBehaviour
     private int _jumpsRemaining;
     private float _jumpEndTime;
     private Rigidbody2D _rb;
+
 
 
     private void Awake()
@@ -54,9 +58,9 @@ public class Player : MonoBehaviour
     private void Update()
     {
         UpdateGrounding();
-
-        _horizontal = Input.GetAxis("Horizontal");
-        Debug.Log(_horizontal);
+        
+        var horizontalInput = Input.GetAxis("Horizontal");
+        
         var vertical = _rb.linearVelocity.y;
 
         if (Input.GetButtonDown("Fire1") && _jumpsRemaining > 0)
@@ -70,7 +74,8 @@ public class Player : MonoBehaviour
 
         if (Input.GetButton("Fire1") && _jumpEndTime > Time.time) vertical = _jumpVelocity;
 
-        _horizontal *= _horizontalVelocity;
+        var desiredHorizontal = horizontalInput * _maxHorizontalSpeed;
+        _horizontal = Mathf.Lerp(_horizontal, desiredHorizontal, Time.deltaTime * _acceleration);
         _rb.linearVelocity = new Vector2(_horizontal, vertical);
         UpdateSprite();
     }
