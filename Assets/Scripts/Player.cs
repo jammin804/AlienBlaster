@@ -1,6 +1,7 @@
 using System;
 using Unity.VisualScripting;
 using UnityEngine;
+using UnityEngine.InputSystem;
 using UnityEngine.Serialization;
 
 public class Player : MonoBehaviour
@@ -22,11 +23,12 @@ public class Player : MonoBehaviour
     private Animator _animator;
     private AudioSource _audioSource;
     private Rigidbody2D _rb;
+    private PlayerInput _playerInput;
     
     private float _horizontal;
     private int _jumpsRemaining;
     private float _jumpEndTime;
-    
+
 
 
     private void Awake()
@@ -35,6 +37,7 @@ public class Player : MonoBehaviour
         _animator = GetComponent<Animator>();
         _audioSource = GetComponent<AudioSource>();
         _rb = GetComponent<Rigidbody2D>();
+        _playerInput = GetComponent<PlayerInput>();
     }
 
     private void OnDrawGizmos()
@@ -61,11 +64,11 @@ public class Player : MonoBehaviour
     {
         UpdateGrounding();
         
-        var horizontalInput = Input.GetAxis("Horizontal");
+        var horizontalInput = _playerInput.actions["Move"].ReadValue<Vector2>().x;
         
         var vertical = _rb.linearVelocity.y;
 
-        if (Input.GetButtonDown("Fire1") && _jumpsRemaining > 0)
+        if (_playerInput.actions["Attack"].WasPerformedThisFrame() && _jumpsRemaining > 0)
         {
             _jumpEndTime = Time.time + _jumpDuration;
             _jumpsRemaining--;
@@ -74,7 +77,7 @@ public class Player : MonoBehaviour
             _audioSource.Play();
         }
 
-        if (Input.GetButton("Fire1") && _jumpEndTime > Time.time) vertical = _jumpVelocity;
+        if (_playerInput.actions["Attack"].ReadValue<float>() > 0 && _jumpEndTime > Time.time) vertical = _jumpVelocity;
 
         var desiredHorizontal = horizontalInput * _maxHorizontalSpeed;
         var acceleration = IsOnSnow ? _snowAcceleration : _groundAcceleration;
