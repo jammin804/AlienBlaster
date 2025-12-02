@@ -15,6 +15,7 @@ public class Player : MonoBehaviour
     [SerializeField] private float _footOffset = 0.35f;
     [FormerlySerializedAs("_acceleration")] [SerializeField] private float _groundAcceleration = 10.0f;
     [SerializeField] private float _snowAcceleration = 1.0f;
+    [SerializeField] private AudioClip _coinSFX;
     
     public bool IsGrounded;
     [FormerlySerializedAs("OnSnow")] public bool IsOnSnow;
@@ -29,7 +30,6 @@ public class Player : MonoBehaviour
     private int _jumpsRemaining;
     private float _jumpEndTime;
     private int _coins;
-
 
     private void Awake()
     {
@@ -138,5 +138,6 @@ public class Player : MonoBehaviour
     public void AddPoint()
     {
         _coins++;
+        _audioSource.PlayOneShot(_coinSFX);
     }
 }

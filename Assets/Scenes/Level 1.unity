@@ -2060,7 +2060,7 @@ Transform:
   m_GameObject: {fileID: 1624039991}
   serializedVersion: 2
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 6, y: -3.5, z: 0}
+  m_LocalPosition: {x: 20, y: -3.5, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
@@ -2736,6 +2736,10 @@ PrefabInstance:
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
       objectReference: {fileID: 0}
+    - target: {fileID: 6594358539989624523, guid: edf3821ecc96b7d4eb096dbd270b1d09, type: 3}
+      propertyPath: _coinSFX
+      value: 
+      objectReference: {fileID: 8300000, guid: 05d74e12c98314845b1b65c4c312a5e4, type: 3}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
     m_AddedGameObjects: []
