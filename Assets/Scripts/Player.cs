@@ -30,7 +30,9 @@ public class Player : MonoBehaviour
     private int _jumpsRemaining;
     private float _jumpEndTime;
     
-    public int Coins { get; private set; }
+    private PlayerData _playerData = new PlayerData();
+    
+    public int Coins { get => _playerData.Coins; private set => _playerData.Coins = value; }
     
 
     private void Awake()
@@ -144,4 +146,10 @@ public class Player : MonoBehaviour
         Coins++;
         _audioSource.PlayOneShot(_coinSFX);
     }
+}
+
+public class PlayerData
+{
+    public int Coins;
+    public int Health;
 }
