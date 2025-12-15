@@ -58,4 +58,8 @@ public class GameManager : MonoBehaviour
         return _playerData[playerIndex];
     }
 
+    public void NewGame()
+    {
+        Debug.Log("New Game Called");
+    }
 }
