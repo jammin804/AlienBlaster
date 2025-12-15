@@ -17,6 +17,7 @@ public class Player : MonoBehaviour
     [FormerlySerializedAs("_acceleration")] [SerializeField] private float _groundAcceleration = 10.0f;
     [SerializeField] private float _snowAcceleration = 1.0f;
     [SerializeField] private AudioClip _coinSFX;
+    [SerializeField] private AudioClip _hurtSFX;
     [SerializeField] private float _knockbackVelocity = 400;
     
     
@@ -164,7 +165,6 @@ public class Player : MonoBehaviour
             return;
         }
         _rb.AddForce(-hitNormal * _knockbackVelocity);
-        
-
+        _audioSource.PlayOneShot(_hurtSFX);
     }
 }

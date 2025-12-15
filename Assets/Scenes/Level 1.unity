@@ -2600,7 +2600,7 @@ PrefabInstance:
     m_Modifications:
     - target: {fileID: 2423874954739848134, guid: 03bc6c4b368286d47bf925ae4c7d2ae0, type: 3}
       propertyPath: m_LocalPosition.x
-      value: -14.05
+      value: -14
       objectReference: {fileID: 0}
     - target: {fileID: 2423874954739848134, guid: 03bc6c4b368286d47bf925ae4c7d2ae0, type: 3}
       propertyPath: m_LocalPosition.y
@@ -2872,14 +2872,6 @@ PrefabInstance:
     - target: {fileID: 4445119498071547648, guid: edf3821ecc96b7d4eb096dbd270b1d09, type: 3}
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 6594358539989624523, guid: edf3821ecc96b7d4eb096dbd270b1d09, type: 3}
-      propertyPath: _knockbackVelocity
-      value: 400
-      objectReference: {fileID: 0}
-    - target: {fileID: 6594358539989624523, guid: edf3821ecc96b7d4eb096dbd270b1d09, type: 3}
-      propertyPath: _maxHorizontalSpeed
-      value: 5
       objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []

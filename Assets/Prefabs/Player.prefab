@@ -135,7 +135,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: b839798af73ca0b409014f9ad7d6d5d2, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  _maxHorizontalSpeed: 3
+  _maxHorizontalSpeed: 5
   _jumpVelocity: 5
   _jumpDuration: 0.5
   _jumpSprite: {fileID: 3810435283219779972, guid: c471622ee243a65439ce6f7d292a3a43, type: 3}
@@ -146,6 +146,8 @@ MonoBehaviour:
   _groundAcceleration: 10
   _snowAcceleration: 1
   _coinSFX: {fileID: 8300000, guid: 05d74e12c98314845b1b65c4c312a5e4, type: 3}
+  _hurtSFX: {fileID: 8300000, guid: 726b189936d986f4f8531b7ca37f3638, type: 3}
+  _knockbackVelocity: 400
   IsGrounded: 0
   IsOnSnow: 0
 --- !u!95 &3226801260582332971
