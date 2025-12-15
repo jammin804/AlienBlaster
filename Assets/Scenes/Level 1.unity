@@ -2874,6 +2874,10 @@ PrefabInstance:
       value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 6594358539989624523, guid: edf3821ecc96b7d4eb096dbd270b1d09, type: 3}
+      propertyPath: _knockbackVelocity
+      value: 400
+      objectReference: {fileID: 0}
+    - target: {fileID: 6594358539989624523, guid: edf3821ecc96b7d4eb096dbd270b1d09, type: 3}
       propertyPath: _maxHorizontalSpeed
       value: 5
       objectReference: {fileID: 0}
