@@ -8,7 +8,7 @@ public class GameManager : MonoBehaviour
 {
     public static GameManager Instance { get; private set; }
     
-    [SerializeField] List<PlayerData> _playerData = new List<PlayerData>();
+    [SerializeField] GameData _gameData;
     
     private PlayerInputManager _playerInputManager;
     
@@ -50,16 +50,18 @@ public class GameManager : MonoBehaviour
 
     private PlayerData GetPlayerData(int playerIndex)
     {
-        if (_playerData.Count <= playerIndex)
+        if (_gameData.PlayerDatas.Count <= playerIndex)
         {
             var playerData = new PlayerData();
-            _playerData.Add(playerData);
+            _gameData.PlayerDatas.Add(playerData);
         }
-        return _playerData[playerIndex];
+        return _gameData.PlayerDatas[playerIndex];
     }
 
     public void NewGame()
     {
         Debug.Log("New Game Called");
+        _gameData = new GameData();
+        SceneManager.LoadScene("Level 1");
     }
 }
