@@ -8,7 +8,11 @@ public class Spikes : MonoBehaviour
     {
         if (collision.collider.CompareTag("Player"))
         {
-            SceneManager.LoadScene(0);
+            var player =  collision.collider.GetComponent<Player>();
+            if (player != null)
+            {
+                player.TakeDamage();
+            }
         }
     }
 }
