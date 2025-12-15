@@ -36,7 +36,25 @@ public class GameManager : MonoBehaviour
         else
         {
             _playerInputManager.joinBehavior = PlayerJoinBehavior.JoinPlayersWhenButtonIsPressed;
+            SaveGame();
         }
+
+
+    }
+
+    private void SaveGame()
+    {
+        string text = JsonUtility.ToJson(_gameData);
+        Debug.Log(text);
+        PlayerPrefs.SetString("Game1", text);
+        PlayerPrefs.Save();
+    }
+
+    public void LoadGame()
+    {
+        string text = PlayerPrefs.GetString("Game1");
+        _gameData = JsonUtility.FromJson<GameData>(text);
+        SceneManager.LoadScene("Level 1");
     }
 
     private void HandlePlayerJoined(PlayerInput playerInput)
