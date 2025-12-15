@@ -1,4 +1,5 @@
 using System;
+using System.Collections;
 using TMPro;
 using UnityEngine;
 using UnityEngine.UI;
@@ -7,6 +8,8 @@ public class PlayerPanel : MonoBehaviour
 {
     [SerializeField] private TMP_Text _scoreText;
     [SerializeField] private Image[] _hearts;
+    [SerializeField] private Image _flashImage;
+    
     private Player _player;
 
     public void Bind(Player player)
@@ -25,6 +28,14 @@ public class PlayerPanel : MonoBehaviour
             Image heart = _hearts[i];
             heart.enabled = i < _player.Health;
         }
+        StartCoroutine(Flash());
+    }
+
+    private IEnumerator Flash()
+    {
+        _flashImage.enabled = true;
+        yield return new WaitForSeconds(0.5f);
+        _flashImage.enabled = false;
     }
 
     private void UpdateCoins()

@@ -13,7 +13,7 @@ GameObject:
   - component: {fileID: 5313879393492149053}
   - component: {fileID: 7962055206862088300}
   m_Layer: 5
-  m_Name: Panel
+  m_Name: Hearts
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -558,6 +558,8 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   _scoreText: {fileID: 7381895709193600876}
+  _hearts: []
+  _flashImage: {fileID: 5313879393492149053}
 --- !u!1 &4400371097296346776
 GameObject:
   m_ObjectHideFlags: 0
