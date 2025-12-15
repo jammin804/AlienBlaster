@@ -146,6 +146,11 @@ public class Player : MonoBehaviour
         Coins++;
         _audioSource.PlayOneShot(_coinSFX);
     }
+
+    public void Bind(PlayerData playerData)
+    {
+        _playerData = playerData;
+    }
 }
 
 public class PlayerData
