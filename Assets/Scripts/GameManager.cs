@@ -107,5 +107,6 @@ public class GameManager : MonoBehaviour
         string stringCommaSeperatedGameNames  = string.Join(",", AllGameNames);
         PlayerPrefs.SetString("AllGameNames", stringCommaSeperatedGameNames);
         PlayerPrefs.Save();
+        
     }
 }
