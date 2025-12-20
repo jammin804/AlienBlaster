@@ -1,9 +1,17 @@
-﻿using UnityEngine;
+﻿using TMPro;
+using UnityEngine;
 using UnityEngine.UI;
 
 public class LoadGameButton : MonoBehaviour
 {
+    public string _gameName;
     void Start() => GetComponent<Button>().onClick.AddListener(LoadGame);
 
-    public void LoadGame() => GameManager.Instance.LoadGame();
+    public void LoadGame() => GameManager.Instance.LoadGame(_gameName);
+
+    public void SetGameName(string gameName)
+    {
+        _gameName = gameName;
+        GetComponentInChildren<TMP_Text>().SetText(_gameName);
+    }
 }

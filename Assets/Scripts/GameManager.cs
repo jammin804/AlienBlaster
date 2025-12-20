@@ -1,5 +1,6 @@
 using System;
 using System.Collections.Generic;
+using System.Linq;
 using UnityEngine;
 using UnityEngine.InputSystem;
 using UnityEngine.SceneManagement;
@@ -7,6 +8,8 @@ using UnityEngine.SceneManagement;
 public class GameManager : MonoBehaviour
 {
     public static GameManager Instance { get; private set; }
+    
+    public List<string> AllGameNames = new List<string>();
     
     [SerializeField] GameData _gameData;
     
@@ -19,12 +22,18 @@ public class GameManager : MonoBehaviour
             Destroy(gameObject);
             return;
         }
+        
         Instance = this;
         DontDestroyOnLoad(gameObject);
+        
         _playerInputManager = GetComponent<PlayerInputManager>();
         _playerInputManager.onPlayerJoined += HandlePlayerJoined;
 
         SceneManager.sceneLoaded += HandleSceneLoaded;
+        
+        string commaSeparated = PlayerPrefs.GetString("AllGameNames");
+        Debug.Log(commaSeparated);
+        AllGameNames = commaSeparated.Split(",").ToList();
     }
 
     private void HandleSceneLoaded(Scene arg0, LoadSceneMode arg1)
@@ -50,9 +59,9 @@ public class GameManager : MonoBehaviour
         PlayerPrefs.Save();
     }
 
-    public void LoadGame()
+    public void LoadGame(string gameName)
     {
-        string text = PlayerPrefs.GetString("Game1");
+        string text = PlayerPrefs.GetString(gameName);
         _gameData = JsonUtility.FromJson<GameData>(text);
         SceneManager.LoadScene("Level 1");
     }
